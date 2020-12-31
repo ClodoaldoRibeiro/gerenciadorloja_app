@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gerenciadorloja_app/screens/signin_screen.dart';
 import 'package:gerenciadorloja_app/settings/theme.dart';
 
 void main() {
@@ -10,9 +11,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Gerenciador Loja Virtual',
-      theme: theme(),
-      home:
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'Gerenciador Loja Virtual',
+        theme: theme(),
+        home: SigninScreen());
   }
 }
