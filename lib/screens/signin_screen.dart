@@ -58,7 +58,7 @@ class _SigninScreenState extends State<SigninScreen> {
                             onPressed: snapshot.hasData ? () {} : null,
                             color: kPrimaryColor,
                             textColor: Colors.white,
-                            disabledColor: Colors.pinkAccent.withAlpha(140),
+                            disabledColor: kPrimaryLightColor,
                             child: Text(
                               "Sign in",
                               style: TextStyle(fontSize: 20),
