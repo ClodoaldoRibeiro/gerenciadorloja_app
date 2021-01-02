@@ -12,6 +12,13 @@ class SigninBLoC extends BlocBase with SigninValidators {
   Stream<String> get outPassword =>
       _passwordController.stream.transform(validatePassword);
 
+  Function(String) get changeEmail => _emailController.sink.add;
+
+  Function(String) get changePassword => _passwordController.sink.add;
+
+  Stream<bool> get outSubmitValid =>
+      Observable.combineLatest2(outEmail, outPassword, (a, b) => true);
+
   @override
   void dispose() {
     _emailController.close();

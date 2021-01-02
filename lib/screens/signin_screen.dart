@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gerenciadorloja_app/blocs/signin_bloc.dart';
 import 'package:gerenciadorloja_app/settings/constants.dart';
 import 'package:gerenciadorloja_app/widgets/input_field.dart';
 
@@ -8,6 +9,8 @@ class SigninScreen extends StatefulWidget {
 }
 
 class _SigninScreenState extends State<SigninScreen> {
+  final _signinBLoC = SigninBLoC();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,28 +33,39 @@ class _SigninScreenState extends State<SigninScreen> {
                     height: 30,
                   ),
                   InputField(
-                      hint: "Digite seu e-mail",
-                      icon: Icons.person_outline,
-                      obscure: false),
+                    hint: "Digite seu e-mail",
+                    icon: Icons.person_outline,
+                    obscure: false,
+                    stream: _signinBLoC.outEmail,
+                    onChanged: _signinBLoC.changeEmail,
+                  ),
                   InputField(
-                      hint: "Informe sua senha",
-                      icon: Icons.vpn_key_outlined,
-                      obscure: true),
-                  SizedBox(
-                    height: 50,
+                    hint: "Informe sua senha",
+                    icon: Icons.vpn_key_outlined,
+                    obscure: true,
+                    stream: _signinBLoC.outPassword,
+                    onChanged: _signinBLoC.changePassword,
                   ),
                   SizedBox(
                     height: 50,
-                    child: RaisedButton(
-                      onPressed: () {},
-                      color: kPrimaryColor,
-                      textColor: Colors.white,
-                      child: Text(
-                        "Sign in",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ),
-                  )
+                  ),
+                  StreamBuilder<bool>(
+                      stream: _signinBLoC.outSubmitValid,
+                      builder: (context, snapshot) {
+                        return SizedBox(
+                          height: 50,
+                          child: RaisedButton(
+                            onPressed: snapshot.hasData ? () {} : null,
+                            color: kPrimaryColor,
+                            textColor: Colors.white,
+                            disabledColor: Colors.pinkAccent.withAlpha(140),
+                            child: Text(
+                              "Sign in",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ),
+                        );
+                      })
                 ],
               ),
             ),
