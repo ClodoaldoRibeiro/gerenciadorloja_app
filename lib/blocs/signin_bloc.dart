@@ -2,7 +2,7 @@ import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:gerenciadorloja_app/validators/signin_validator.dart';
 import 'package:rxdart/rxdart.dart';
 
-class SigninBLoC extends BlocBase with SigninValidators {
+class SigninBLoC extends BlocBase with SigninValidator {
   final _emailController = BehaviorSubject<String>();
   final _passwordController = BehaviorSubject<String>();
 

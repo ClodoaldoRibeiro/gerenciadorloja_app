@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gerenciadorloja_app/settings/constants.dart';
+import 'package:gerenciadorloja_app/ui/themes/constants.dart';
 
 class InputField extends StatelessWidget {
   final IconData icon;

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gerenciadorloja_app/blocs/signin_bloc.dart';
-import 'package:gerenciadorloja_app/settings/constants.dart';
-import 'package:gerenciadorloja_app/widgets/input_field.dart';
+import 'package:gerenciadorloja_app/ui/android/widgets/input_field.dart';
+import 'package:gerenciadorloja_app/ui/themes/constants.dart';
 
-class SigninScreen extends StatefulWidget {
+class SigninUI extends StatefulWidget {
   @override
-  _SigninScreenState createState() => _SigninScreenState();
+  _SigninUIState createState() => _SigninUIState();
 }
 
-class _SigninScreenState extends State<SigninScreen> {
+class _SigninUIState extends State<SigninUI> {
   final _signinBLoC = SigninBLoC();
 
   @override
