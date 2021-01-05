@@ -55,12 +55,13 @@ class _SigninUIState extends State<SigninUI> {
                         return SizedBox(
                           height: 50,
                           child: RaisedButton(
-                            onPressed: snapshot.hasData ? () {} : null,
+                            onPressed:
+                                snapshot.hasData ? _signinBLoC.submit : null,
                             color: kPrimaryColor,
                             textColor: Colors.white,
                             disabledColor: kPrimaryLightColor,
                             child: Text(
-                              "Sign in",
+                              "Entrar",
                               style: TextStyle(fontSize: 20),
                             ),
                           ),

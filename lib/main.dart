@@ -1,8 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:gerenciadorloja_app/ui/android/app_android.dart';
-import 'package:gerenciadorloja_app/ui/android/signin_ui.dart';
-import 'package:gerenciadorloja_app/ui/themes/theme.dart';
+import 'package:gerenciadorloja_app/ui/android/android_app.dart';
 
 void main() {
-  runApp(AppAndroid());
+  runApp(Platform.isIOS ? AndroidApp() : null);
 }
