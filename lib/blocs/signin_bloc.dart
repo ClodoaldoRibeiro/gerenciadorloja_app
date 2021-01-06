@@ -30,6 +30,23 @@ class SigninBLoC extends BlocBase with SigninValidator {
   Stream<bool> get outSubmitValid =>
       Observable.combineLatest2(outEmail, outPassword, (a, b) => true);
 
+  LoginBloc() {
+    _streamSubscription =
+        FirebaseAuth.instance.onAuthStateChanged.listen((user) async {
+          print(user);
+      if (user != null) {
+        if (await verifyPrivileges(user)) {
+          _stateController.add(LoginState.SUCCESS);
+        } else {
+          FirebaseAuth.instance.signOut();
+          _stateController.add(LoginState.FAIL);
+        }
+      } else {
+        _stateController.add(LoginState.IDLE);
+      }
+    });
+  }
+
   Future<bool> verifyPrivileges(FirebaseUser user) async {
     return await Firestore.instance
         .collection("admins")
@@ -56,22 +73,6 @@ class SigninBLoC extends BlocBase with SigninValidator {
         .signInWithEmailAndPassword(email: email, password: password)
         .catchError((e) {
       _stateController.add(LoginState.FAIL);
-    });
-  }
-
-  LoginBloc() {
-    _streamSubscription =
-        FirebaseAuth.instance.onAuthStateChanged.listen((user) async {
-      if (user != null) {
-        if (await verifyPrivileges(user)) {
-          _stateController.add(LoginState.SUCCESS);
-        } else {
-          FirebaseAuth.instance.signOut();
-          _stateController.add(LoginState.FAIL);
-        }
-      } else {
-        _stateController.add(LoginState.IDLE);
-      }
     });
   }
 
