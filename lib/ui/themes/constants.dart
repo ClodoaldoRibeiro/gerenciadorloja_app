@@ -4,6 +4,7 @@ import 'size_config.dart';
 const kPrimaryColor = Color.fromARGB(255, 211, 118, 130);
 const kPrimaryLightColor = Color(0xFFFFECDF);
 
+
 // Constantes do LinearGradient
 const kPrimaryGradientColor = LinearGradient(
   begin: Alignment.topLeft,

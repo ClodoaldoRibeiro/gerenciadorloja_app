@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gerenciadorloja_app/blocs/signin_bloc.dart';
 import 'package:gerenciadorloja_app/ui/android/widgets/input_field.dart';
-import 'package:gerenciadorloja_app/ui/themes/constants.dart';
+import 'package:gerenciadorloja_app/ui/themes/cor_padrao.dart';
 
 import 'home_ui.dart';
 
@@ -18,6 +18,8 @@ class _SigninUIState extends State<SigninUI> {
     super.initState();
 
     _signinBLoC.outState.listen((state) {
+
+      print('Pegou o estado do usuário');
       switch (state) {
         case LoginState.SUCCESS:
           Navigator.of(context).pushReplacement(
@@ -27,7 +29,7 @@ class _SigninUIState extends State<SigninUI> {
           showDialog(
               context: context,
               builder: (context) => AlertDialog(
-                    title: Text("Erro"),
+                    title: Text("Falha"),
                     content: Text("Você não possui os privilégios necessários"),
                   ));
           break;
@@ -44,8 +46,7 @@ class _SigninUIState extends State<SigninUI> {
           stream: _signinBLoC.outState,
           initialData: LoginState.SUCCESS,
           builder: (context, snapshot) {
-            print(snapshot.data);
-
+            print('Entrou no StreemBuilder');
             switch (snapshot.data) {
               case LoginState.LOADING:
                 return Center(
@@ -68,7 +69,7 @@ class _SigninUIState extends State<SigninUI> {
                           children: [
                             Icon(
                               Icons.account_circle,
-                              color: kPrimaryColor,
+                              color: CorPadrao.CorApp[500],
                               size: 160,
                             ),
                             SizedBox(
@@ -100,9 +101,9 @@ class _SigninUIState extends State<SigninUI> {
                                       onPressed: snapshot.hasData
                                           ? _signinBLoC.submit
                                           : null,
-                                      color: kPrimaryColor,
+                                      color: CorPadrao.CorApp[500],
                                       textColor: Colors.white,
-                                      disabledColor: kPrimaryLightColor,
+                                      disabledColor: CorPadrao.CorApp[100],
                                       child: Text(
                                         "Entrar",
                                         style: TextStyle(fontSize: 20),
@@ -115,6 +116,12 @@ class _SigninUIState extends State<SigninUI> {
                       ),
                     ),
                   ],
+                );
+              default:
+                return Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation(CorPadrao.CorApp[500]),
+                  ),
                 );
             }
           }),

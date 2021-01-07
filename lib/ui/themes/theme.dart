@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'constants.dart';
+import 'cor_padrao.dart';
 
 ///Tema Padrão da aplicação
 ThemeData theme() {
   return ThemeData(
     scaffoldBackgroundColor: Colors.white,
     fontFamily: 'Montserrat',
-    primaryColor: kPrimaryColor,
+    primaryColor: CorPadrao.CorApp[500],
     appBarTheme: appBarTheme(),
     textTheme: textTheme(),
     // inputDecorationTheme: inputDecorationTheme(),
@@ -44,7 +45,7 @@ TextTheme textTheme() {
 AppBarTheme appBarTheme() {
   return AppBarTheme(
     centerTitle: true,
-    color: kPrimaryColor,
+    color: CorPadrao.CorApp[500],
     elevation: 0,
     brightness: Brightness.light,
     iconTheme: IconThemeData(color: Colors.black),

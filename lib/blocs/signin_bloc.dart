@@ -31,12 +31,16 @@ class SigninBLoC extends BlocBase with SigninValidator {
       Observable.combineLatest2(outEmail, outPassword, (a, b) => true);
 
   LoginBloc() {
+
+      print('Entrou no BLOC...');
     _streamSubscription =
         FirebaseAuth.instance.onAuthStateChanged.listen((user) async {
           print(user);
       if (user != null) {
+        print('user != null');
         if (await verifyPrivileges(user)) {
           _stateController.add(LoginState.SUCCESS);
+            print(user);
         } else {
           FirebaseAuth.instance.signOut();
           _stateController.add(LoginState.FAIL);
@@ -45,6 +49,7 @@ class SigninBLoC extends BlocBase with SigninValidator {
         _stateController.add(LoginState.IDLE);
       }
     });
+      print('_streamSubscription...');
   }
 
   Future<bool> verifyPrivileges(FirebaseUser user) async {
