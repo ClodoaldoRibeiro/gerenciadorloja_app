@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
-class CorPadrao {
-  //Corpadrão do Aplicativo
-  static const int _pinkPrimaryValue = 0xFFE91E63;
-  static const MaterialColor CorApp = MaterialColor(
-    _pinkPrimaryValue,
+class AppColors {
+
+  static const COR_PRIMARIA = Color(0xFFE91E63);
+  static const COR_SECUNDARIA = Color(0xFFFFFFFF);
+
+  static const MaterialColor COR_PALLETA = MaterialColor(
+    0xFFE91E63,
     <int, Color>{
       50: Color(0xFFFCE4EC),
       100: Color(0xFFF8BBD0),
@@ -18,4 +20,5 @@ class CorPadrao {
       900: Color(0xFF880E4F),
     },
   );
+
 }

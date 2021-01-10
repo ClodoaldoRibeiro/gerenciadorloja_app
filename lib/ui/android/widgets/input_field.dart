@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gerenciadorloja_app/ui/themes/constants.dart';
-import 'package:gerenciadorloja_app/ui/themes/cor_padrao.dart';
+import 'package:gerenciadorloja_app/ui/themes/app_colors.dart';
 
 class InputField extends StatelessWidget {
   final IconData icon;
@@ -26,16 +26,16 @@ class InputField extends StatelessWidget {
             decoration: InputDecoration(
                 icon: Icon(
                   icon,
-                  color: CorPadrao.CorApp[500],
+                  color: AppColors.COR_PALLETA[500],
                 ),
                 hintText: hint,
-                hintStyle: TextStyle(color: CorPadrao.CorApp[500]),
+                hintStyle: TextStyle(color: AppColors.COR_PALLETA[500]),
                 focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: CorPadrao.CorApp[500])),
+                    borderSide: BorderSide(color: AppColors.COR_PALLETA[500])),
                 contentPadding:
                     EdgeInsets.only(left: 5, right: 30, bottom: 30, top: 30),
                 errorText: snapshot.hasError ? snapshot.error : null),
-            style: TextStyle(color: CorPadrao.CorApp[500]),
+            style: TextStyle(color: AppColors.COR_PALLETA[500]),
             obscureText: obscure,
           );
         });

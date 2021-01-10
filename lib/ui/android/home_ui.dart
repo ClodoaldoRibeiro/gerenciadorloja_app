@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gerenciadorloja_app/ui/themes/app_colors.dart';
 
 class HomeUI extends StatefulWidget {
   @override
@@ -6,8 +7,60 @@ class HomeUI extends StatefulWidget {
 }
 
 class _HomeUIState extends State<HomeUI> {
+  PageController _pageController;
+  int _currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      backgroundColor: AppColors.COR_SECUNDARIA,
+      body: PageView(
+        onPageChanged: (pagina) {
+          setState(() {
+            _currentPage = pagina;
+          });
+        },
+        controller: _pageController,
+        children: [
+          Container(
+            color: AppColors.COR_PALLETA[100],
+          ),
+          Container(
+            color: AppColors.COR_PALLETA[300],
+          ),
+          Container(
+            color: AppColors.COR_PALLETA[500],
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentPage,
+        onTap: (pagina) {
+          _pageController.animateToPage(pagina,
+              duration: Duration(milliseconds: 500), curve: Curves.bounceOut);
+        },
+        items: [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline), label: 'Clientes'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart_outlined), label: 'Pedidos'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.list_outlined), label: 'Produtos')
+        ],
+      ),
+    );
   }
 }

@@ -31,25 +31,20 @@ class SigninBLoC extends BlocBase with SigninValidator {
       Observable.combineLatest2(outEmail, outPassword, (a, b) => true);
 
   LoginBloc() {
-
-      print('Entrou no BLOC...');
     _streamSubscription =
         FirebaseAuth.instance.onAuthStateChanged.listen((user) async {
-          print(user);
       if (user != null) {
-        print('user != null');
         if (await verifyPrivileges(user)) {
           _stateController.add(LoginState.SUCCESS);
-            print(user);
         } else {
           FirebaseAuth.instance.signOut();
           _stateController.add(LoginState.FAIL);
         }
       } else {
         _stateController.add(LoginState.IDLE);
+        print('Estado do usuário ${user}');
       }
     });
-      print('_streamSubscription...');
   }
 
   Future<bool> verifyPrivileges(FirebaseUser user) async {
@@ -69,14 +64,23 @@ class SigninBLoC extends BlocBase with SigninValidator {
   }
 
   void submit() {
+    FirebaseAuth _auth = FirebaseAuth.instance;
+    FirebaseUser firebaseUser;
+
     final email = _emailController.value;
     final password = _passwordController.value;
 
     _stateController.add(LoginState.LOADING);
 
-    FirebaseAuth.instance
+    _auth
         .signInWithEmailAndPassword(email: email, password: password)
-        .catchError((e) {
+        .then((user) async {
+      // firebaseUser = user as FirebaseUser;
+
+      if (user != null) {
+        _stateController.add(LoginState.SUCCESS);
+      }
+    }).catchError((e) {
       _stateController.add(LoginState.FAIL);
     });
   }
@@ -87,6 +91,6 @@ class SigninBLoC extends BlocBase with SigninValidator {
     _passwordController.close();
     _stateController.close();
 
-    _streamSubscription.cancel();
+    if (_streamSubscription != null) _streamSubscription.cancel();
   }
 }
