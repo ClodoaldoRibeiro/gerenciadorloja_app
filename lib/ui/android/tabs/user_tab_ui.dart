@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:gerenciadorloja_app/ui/android/widgets/user_tile_ui.dart';
 import 'package:gerenciadorloja_app/ui/themes/app_colors.dart';
 
-class UserTab extends StatelessWidget {
+class UserTabUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final textStyle = TextStyle(color: AppColors.COR_PRIMARIA);
+
     return Column(
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8.0),
           child: TextField(
-            style: TextStyle(color: AppColors.COR_PRIMARIA),
+            style: textStyle,
             decoration: InputDecoration(
                 hintText: "Pesquisar",
-                hintStyle: TextStyle(color: AppColors.COR_PRIMARIA),
+                hintStyle: textStyle,
                 icon: Icon(
                   Icons.search_outlined,
                   color: AppColors.COR_PRIMARIA,
@@ -25,19 +28,14 @@ class UserTab extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8.0),
             child: ListView.separated(
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(
-                      "Teste ${index}",
-                      style: TextStyle(color: AppColors.COR_PRIMARIA),
-                    ),
-                  );
+                  return UserTileUI();
                 },
                 separatorBuilder: (context, index) {
                   return Divider(
-                    color: AppColors.COR_PRIMARIA,
+                    color: AppColors.COR_PALLETA[200],
                   );
                 },
-                itemCount: 30),
+                itemCount: 50),
           ),
         )
       ],

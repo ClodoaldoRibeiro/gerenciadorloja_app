@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gerenciadorloja_app/ui/android/tabs/user_tab.dart';
+import 'package:gerenciadorloja_app/ui/android/tabs/user_tab_ui.dart';
 import 'package:gerenciadorloja_app/ui/themes/app_colors.dart';
 
 class HomeUI extends StatefulWidget {
@@ -37,7 +37,7 @@ class _HomeUIState extends State<HomeUI> {
           },
           controller: _pageController,
           children: [
-            UserTab(),
+            UserTabUI(),
             Container(
               color: AppColors.COR_PALLETA[300],
             ),
