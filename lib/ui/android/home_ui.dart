@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gerenciadorloja_app/ui/android/tabs/user_tab.dart';
 import 'package:gerenciadorloja_app/ui/themes/app_colors.dart';
 
 class HomeUI extends StatefulWidget {
@@ -27,24 +28,24 @@ class _HomeUIState extends State<HomeUI> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.COR_SECUNDARIA,
-      body: PageView(
-        onPageChanged: (pagina) {
-          setState(() {
-            _currentPage = pagina;
-          });
-        },
-        controller: _pageController,
-        children: [
-          Container(
-            color: AppColors.COR_PALLETA[100],
-          ),
-          Container(
-            color: AppColors.COR_PALLETA[300],
-          ),
-          Container(
-            color: AppColors.COR_PALLETA[500],
-          ),
-        ],
+      body: SafeArea(
+        child: PageView(
+          onPageChanged: (pagina) {
+            setState(() {
+              _currentPage = pagina;
+            });
+          },
+          controller: _pageController,
+          children: [
+            UserTab(),
+            Container(
+              color: AppColors.COR_PALLETA[300],
+            ),
+            Container(
+              color: AppColors.COR_PALLETA[500],
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentPage,
