@@ -35,7 +35,7 @@ class UserTabUI extends StatelessWidget {
                     color: AppColors.COR_PALLETA[200],
                   );
                 },
-                itemCount: 50),
+                itemCount: 100),
           ),
         )
       ],

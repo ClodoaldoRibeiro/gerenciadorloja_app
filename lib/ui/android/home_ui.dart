@@ -39,10 +39,18 @@ class _HomeUIState extends State<HomeUI> {
           children: [
             UserTabUI(),
             Container(
-              color: AppColors.COR_PALLETA[300],
+              child: Icon(
+                Icons.shopping_cart_outlined,
+                size: 130,
+                color: AppColors.COR_PRIMARIA,
+              ),
             ),
             Container(
-              color: AppColors.COR_PALLETA[500],
+              child: Icon(
+                Icons.list_outlined,
+                size: 130,
+                color: AppColors.COR_PRIMARIA,
+              ),
             ),
           ],
         ),
