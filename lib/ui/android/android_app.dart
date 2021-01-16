@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gerenciadorloja_app/ui/android/signin_ui.dart';
+import 'package:gerenciadorloja_app/ui/android/signin/signin_ui.dart';
 import 'package:gerenciadorloja_app/ui/themes/theme.dart';
 
 class AndroidApp extends StatelessWidget {

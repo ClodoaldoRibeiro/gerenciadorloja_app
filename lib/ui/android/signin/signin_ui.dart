@@ -3,7 +3,7 @@ import 'package:gerenciadorloja_app/blocs/signin_bloc.dart';
 import 'package:gerenciadorloja_app/ui/android/widgets/input_field.dart';
 import 'package:gerenciadorloja_app/ui/themes/app_colors.dart';
 
-import 'home_ui.dart';
+import '../home/home_ui.dart';
 
 class SigninUI extends StatefulWidget {
   @override

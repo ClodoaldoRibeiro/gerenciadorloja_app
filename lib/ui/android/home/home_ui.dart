@@ -1,9 +1,11 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
+import 'package:gerenciadorloja_app/blocs/orders_bloc.dart';
 import 'package:gerenciadorloja_app/blocs/user_bloc.dart';
-import 'package:gerenciadorloja_app/ui/android/tabs/orders_tab.dart';
-import 'package:gerenciadorloja_app/ui/android/tabs/user_tab_ui.dart';
+import 'package:gerenciadorloja_app/ui/android/user/user_tab_ui.dart';
 import 'package:gerenciadorloja_app/ui/themes/app_colors.dart';
+
+import '../orders/orders_tab.dart';
 
 class HomeUI extends StatefulWidget {
   @override
@@ -15,18 +17,19 @@ class _HomeUIState extends State<HomeUI> {
   int _currentPage = 0;
 
   UserBLoC _userBLoC;
+  OrdersBloc _ordersBloc;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController();
     _userBLoC = UserBLoC();
+    _ordersBloc = OrdersBloc();
   }
 
   @override
   void dispose() {
     _pageController.dispose();
-
     super.dispose();
   }
 
@@ -37,24 +40,27 @@ class _HomeUIState extends State<HomeUI> {
       body: SafeArea(
         child: BlocProvider<UserBLoC>(
           bloc: _userBLoC,
-          child: PageView(
-            onPageChanged: (pagina) {
-              setState(() {
-                _currentPage = pagina;
-              });
-            },
-            controller: _pageController,
-            children: [
-              UserTabUI(),
-              OrdersTab(),
-              Container(
-                child: Icon(
-                  Icons.list_outlined,
-                  size: 130,
-                  color: AppColors.COR_PRIMARIA,
+          child: BlocProvider<OrdersBloc>(
+            bloc: _ordersBloc,
+            child: PageView(
+              onPageChanged: (pagina) {
+                setState(() {
+                  _currentPage = pagina;
+                });
+              },
+              controller: _pageController,
+              children: [
+                UserTabUI(),
+                OrdersTab(),
+                Container(
+                  child: Icon(
+                    Icons.list_outlined,
+                    size: 130,
+                    color: AppColors.COR_PRIMARIA,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
