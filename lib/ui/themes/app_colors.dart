@@ -4,7 +4,6 @@ class AppColors {
 
   static const COR_PRIMARIA = Color(0xFFE91E63);
   static const COR_SECUNDARIA = Color(0xFFFFFFFF);
-
   static const MaterialColor COR_PALLETA = MaterialColor(
     0xFFE91E63,
     <int, Color>{

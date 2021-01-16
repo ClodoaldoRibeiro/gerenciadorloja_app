@@ -34,20 +34,20 @@ class UserTabUI extends StatelessWidget {
                 stream: _userBLoC.outUsers,
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
-                    return Center(
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.person_search_outlined,
-                            size: 130,
-                            color: AppColors.COR_PRIMARIA,
-                          ),
-                          Text(
-                            'Não há clientes...',
-                            style: TextStyle(color: AppColors.COR_PALLETA[300]),
-                          ),
-                        ],
-                      ),
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.person_search_outlined,
+                          size: 130,
+                          color: AppColors.COR_PRIMARIA,
+                        ),
+                        Text(
+                          'Nenhum cliente encontrado',
+                          style: TextStyle(color: AppColors.COR_PALLETA[300]),
+                        ),
+                      ],
                     );
                   } else if (snapshot.data.length == 0) {
                     return Column(
@@ -60,7 +60,7 @@ class UserTabUI extends StatelessWidget {
                           color: AppColors.COR_PRIMARIA,
                         ),
                         Text(
-                          'Nemhum dado encontrado',
+                          'Nenhum dado encontrado',
                           style: TextStyle(color: AppColors.COR_PALLETA[300]),
                         ),
                       ],

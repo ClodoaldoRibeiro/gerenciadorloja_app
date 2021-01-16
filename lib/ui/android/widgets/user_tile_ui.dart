@@ -15,23 +15,19 @@ class UserTileUI extends StatelessWidget {
       return ListTile(
         title: Text(
           user["name"],
-          style: TextStyle(color: AppColors.COR_PRIMARIA),
         ),
         subtitle: Text(
           user["email"],
-          style: textStyle,
         ),
         trailing: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Pedidos: ${user["orders"]}",
-              style: textStyle,
+              "Pedidos: ${user["orders"]}"
             ),
             Text(
               "Gasto: R\$${user["money"].toStringAsFixed(2)}",
-              style: textStyle,
             ),
           ],
         ),
@@ -51,7 +47,7 @@ class UserTileUI extends StatelessWidget {
                     margin: EdgeInsets.symmetric(vertical: 4),
                   ),
                   baseColor: Colors.white,
-                  highlightColor: AppColors.COR_PRIMARIA),
+                  highlightColor: Colors.grey),
             ),
             SizedBox(
               width: 50,
@@ -62,7 +58,7 @@ class UserTileUI extends StatelessWidget {
                     margin: EdgeInsets.symmetric(vertical: 4),
                   ),
                   baseColor: Colors.white,
-                  highlightColor: AppColors.COR_PRIMARIA),
+                  highlightColor: Colors.grey),
             )
           ],
         ),

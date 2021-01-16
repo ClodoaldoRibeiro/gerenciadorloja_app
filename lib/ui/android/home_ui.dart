@@ -1,6 +1,7 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:gerenciadorloja_app/blocs/user_bloc.dart';
+import 'package:gerenciadorloja_app/ui/android/tabs/orders_tab.dart';
 import 'package:gerenciadorloja_app/ui/android/tabs/user_tab_ui.dart';
 import 'package:gerenciadorloja_app/ui/themes/app_colors.dart';
 
@@ -45,13 +46,7 @@ class _HomeUIState extends State<HomeUI> {
             controller: _pageController,
             children: [
               UserTabUI(),
-              Container(
-                child: Icon(
-                  Icons.shopping_cart_outlined,
-                  size: 130,
-                  color: AppColors.COR_PRIMARIA,
-                ),
-              ),
+              OrdersTab(),
               Container(
                 child: Icon(
                   Icons.list_outlined,
