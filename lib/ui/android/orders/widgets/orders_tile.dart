@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gerenciadorloja_app/ui/themes/app_colors.dart';
 
 import 'order_header.dart';
 
@@ -45,9 +46,12 @@ class OrdersTile extends StatelessWidget {
                       return ListTile(
                         title: Text(p["product"]["title"] + " " + p["size"]),
                         subtitle: Text(p["category"] + "/" + p["pid"]),
-                        trailing: Text(
-                          p["quantity"].toString(),
-                          style: TextStyle(fontSize: 20),
+                        trailing: CircleAvatar(
+                          radius: 20.0,
+                          backgroundColor: Colors.grey[200],
+                          child: Text(
+                            p["quantity"].toString(),
+                          ),
                         ),
                         contentPadding: EdgeInsets.zero,
                       );
