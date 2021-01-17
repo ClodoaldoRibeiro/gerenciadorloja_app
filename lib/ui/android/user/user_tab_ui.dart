@@ -1,7 +1,7 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:gerenciadorloja_app/blocs/user_bloc.dart';
-import 'file:///C:/src/MyProjects/gerenciadorloja_app/lib/ui/android/user/widgets/user_tile_ui.dart';
+import 'package:gerenciadorloja_app/ui/android/user/widgets/user_tile_ui.dart';
 import 'package:gerenciadorloja_app/ui/themes/app_colors.dart';
 
 class UserTabUI extends StatelessWidget {
