@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:gerenciadorloja_app/blocs/orders_bloc.dart';
 import 'package:gerenciadorloja_app/blocs/user_bloc.dart';
+import 'package:gerenciadorloja_app/ui/android/products/products_tab.dart';
 import 'package:gerenciadorloja_app/ui/android/user/user_tab_ui.dart';
 import 'package:gerenciadorloja_app/ui/themes/app_colors.dart';
 
@@ -53,13 +54,7 @@ class _HomeUIState extends State<HomeUI> {
               children: [
                 UserTabUI(),
                 OrdersTab(),
-                Container(
-                  child: Icon(
-                    Icons.list_outlined,
-                    size: 130,
-                    color: AppColors.COR_PRIMARIA,
-                  ),
-                ),
+                ProductsTab(),
               ],
             ),
           ),
