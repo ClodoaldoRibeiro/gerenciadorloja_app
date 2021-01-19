@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gerenciadorloja_app/ui/themes/app_colors.dart';
 
 class CategoryTile extends StatelessWidget {
   final DocumentSnapshot category;
@@ -21,6 +22,39 @@ class CategoryTile extends StatelessWidget {
             style:
                 TextStyle(color: Colors.grey[850], fontWeight: FontWeight.w500),
           ),
+          children: <Widget>[
+            FutureBuilder<QuerySnapshot>(
+              future: category.reference.collection("items").getDocuments(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) return Container();
+                return Column(
+                  children: snapshot.data.documents.map((doc) {
+                    return ListTile(
+                      leading: CircleAvatar(
+                        backgroundImage: NetworkImage(doc.data["images"][0]),
+                        backgroundColor: Colors.transparent,
+                      ),
+                      title: Text(doc.data["title"]),
+                      trailing:
+                          Text("R\$${doc.data["price"].toStringAsFixed(2)}"),
+                      onTap: () {},
+                    );
+                  }).toList()
+                    ..add(ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: Colors.transparent,
+                        child: Icon(
+                          Icons.add,
+                          color: AppColors.COR_PRIMARIA,
+                        ),
+                      ),
+                      title: Text("Adicionar"),
+                      onTap: () {},
+                    )),
+                );
+              },
+            )
+          ],
         ),
       ),
     );
