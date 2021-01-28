@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gerenciadorloja_app/blocs/product_bloc.dart';
 import 'package:gerenciadorloja_app/ui/android/widgets/images_widget.dart';
 import 'package:gerenciadorloja_app/ui/themes/app_colors.dart';
+import 'package:gerenciadorloja_app/validators/product_validator.dart';
 
 class ProductUI extends StatefulWidget {
   ProductUI({@required this.categoryId, this.product});
@@ -14,11 +15,11 @@ class ProductUI extends StatefulWidget {
   _ProductUIState createState() => _ProductUIState(categoryId, product);
 }
 
-class _ProductUIState extends State<ProductUI> {
+class _ProductUIState extends State<ProductUI> with ProductValidator {
   _ProductUIState(String categoryId, DocumentSnapshot product)
       : _producBloC = ProducBloC(categoryId: categoryId, product: product);
 
-  final GlobalKey _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   final _fieldStyle = TextStyle(color: Colors.black54, fontSize: 16);
   ProducBloC _producBloC;
 
@@ -38,7 +39,11 @@ class _ProductUIState extends State<ProductUI> {
           IconButton(
             color: AppColors.COR_SECUNDARIA,
             icon: Icon(Icons.save),
-            onPressed: () {},
+            onPressed: () {
+              if (_formKey.currentState.validate()) {
+                _formKey.currentState.save();
+              }
+            },
           ),
         ],
       ),
@@ -58,33 +63,33 @@ class _ProductUIState extends State<ProductUI> {
                   ImagesWidget(
                     context: context,
                     initialValue: snapshot.data["images"],
-
-                    ///onSaved: _producBloC.saveImages,
-                    ///validator: validateImages,
+                    onSaved: _producBloC.saveImages,
+                    validator: validateImages,
                   ),
                   TextFormField(
                     initialValue: snapshot.data["title"],
                     maxLines: 1,
                     style: _fieldStyle,
                     decoration: _buildDecoration("Título do produto"),
-                    onSaved: (newValue) {},
+                    validator: validateTitle,
+                    onSaved: _producBloC.saveTitle,
                   ),
                   TextFormField(
-                    initialValue: snapshot.data["description"],
-                    maxLines: 6,
-                    style: _fieldStyle,
-                    decoration: _buildDecoration("Descrição"),
-                    onSaved: (newValue) {},
-                  ),
+                      initialValue: snapshot.data["description"],
+                      maxLines: 6,
+                      style: _fieldStyle,
+                      decoration: _buildDecoration("Descrição"),
+                      validator: validateDescription,
+                      onSaved: _producBloC.saveDescription),
                   TextFormField(
-                    initialValue: snapshot.data["price"]?.toStringAsFixed(2),
-                    maxLines: 1,
-                    style: _fieldStyle,
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
-                    decoration: _buildDecoration("Preço"),
-                    onSaved: (newValue) {},
-                  ),
+                      initialValue: snapshot.data["price"]?.toStringAsFixed(2),
+                      maxLines: 1,
+                      style: _fieldStyle,
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      decoration: _buildDecoration("Preço"),
+                      validator: validatePrice,
+                      onSaved: _producBloC.savePrice),
                 ],
               );
             }),

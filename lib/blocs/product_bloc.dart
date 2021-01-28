@@ -34,6 +34,26 @@ class ProducBloC extends BlocBase {
 
   Map<String, dynamic> unsavedData;
 
+  void saveTitle(String title) {
+    unsavedData["title"] = title;
+  }
+
+  void saveDescription(String description) {
+    unsavedData["description"] = description;
+  }
+
+  void savePrice(String price) {
+    unsavedData["price"] = double.parse(price);
+  }
+
+  void saveImages(List images) {
+    unsavedData["images"] = images;
+  }
+
+  void saveSizes(List sizes) {
+    unsavedData["sizes"] = sizes;
+  }
+
   @override
   void dispose() {
     _dataController.close();
