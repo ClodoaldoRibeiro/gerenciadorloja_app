@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gerenciadorloja_app/ui/themes/app_colors.dart';
 
+import '../product_ui.dart';
+
 class CategoryTile extends StatelessWidget {
   final DocumentSnapshot category;
 
@@ -37,7 +39,13 @@ class CategoryTile extends StatelessWidget {
                       title: Text(doc.data["title"]),
                       trailing:
                           Text("R\$${doc.data["price"].toStringAsFixed(2)}"),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ProductUI(
+                                  categoryId: category.documentID,
+                                  product: doc,
+                                )));
+                      },
                     );
                   }).toList()
                     ..add(ListTile(
@@ -48,8 +56,15 @@ class CategoryTile extends StatelessWidget {
                           color: AppColors.COR_PRIMARIA,
                         ),
                       ),
-                      title: Text("Adicionar"),
-                      onTap: () {},
+                      title: Text(
+                        "Adicionar",
+                        style: TextStyle(color: AppColors.COR_PRIMARIA),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                ProductUI(categoryId: category.documentID)));
+                      },
                     )),
                 );
               },
