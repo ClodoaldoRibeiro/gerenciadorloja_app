@@ -31,7 +31,13 @@ class _ProductUIState extends State<ProductUI> with ProductValidator {
       key: _scaffoldKey,
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Criar Item"),
+        title: StreamBuilder<bool>(
+            stream: _productBloc.outCreated,
+            initialData: false,
+            builder: (context, snapshot) {
+              return Text(snapshot.data ? "Editar Produto" : "Criar Produto");
+            }
+        ),
         elevation: 0,
         actions: [
           IconButton(

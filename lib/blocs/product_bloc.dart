@@ -10,7 +10,7 @@ class ProducBloC extends BlocBase {
       unsavedData["images"] = List.of(product.data["images"]);
       unsavedData["sizes"] = List.of(product.data["sizes"]);
 
-      //  _createdController.add(true);
+      _createdController.add(true);
     } else {
       unsavedData = {
         "title": null,
@@ -19,8 +19,7 @@ class ProducBloC extends BlocBase {
         "images": [],
         "sizes": []
       };
-
-      //_createdController.add(false);
+      _createdController.add(false);
     }
 
     _dataController.add(unsavedData);
