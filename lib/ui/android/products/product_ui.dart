@@ -17,15 +17,18 @@ class ProductUI extends StatefulWidget {
 
 class _ProductUIState extends State<ProductUI> with ProductValidator {
   _ProductUIState(String categoryId, DocumentSnapshot product)
-      : _producBloC = ProducBloC(categoryId: categoryId, product: product);
+      : _productBloc = ProducBloC(categoryId: categoryId, product: product);
+  ProducBloC _productBloc;
 
   final _formKey = GlobalKey<FormState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   final _fieldStyle = TextStyle(color: Colors.black54, fontSize: 16);
-  ProducBloC _producBloC;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         centerTitle: true,
         title: Text("Criar Item"),
@@ -36,63 +39,80 @@ class _ProductUIState extends State<ProductUI> with ProductValidator {
             icon: Icon(Icons.delete),
             onPressed: () {},
           ),
-          IconButton(
-            color: AppColors.COR_SECUNDARIA,
-            icon: Icon(Icons.save),
-            onPressed: () {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-              }
-            },
-          ),
+          StreamBuilder<bool>(
+              stream: _productBloc.outLoading,
+              initialData: false,
+              builder: (context, snapshot) {
+                return IconButton(
+                  color: AppColors.COR_SECUNDARIA,
+                  icon: Icon(Icons.save),
+                  onPressed: snapshot.data ? null : _saveProduct,
+                );
+              }),
         ],
       ),
-      body: Form(
-        key: _formKey,
-        child: StreamBuilder<Map>(
-            stream: _producBloC.outData,
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) return Container();
-              return ListView(
-                padding: EdgeInsets.all(18),
-                children: [
-                  Text(
-                    "Imagens",
-                    style: TextStyle(color: Colors.grey, fontSize: 12),
+      body: Stack(
+        children: <Widget>[
+          Form(
+            key: _formKey,
+            child: StreamBuilder<Map>(
+                stream: _productBloc.outData,
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) return Container();
+                  return ListView(
+                    padding: EdgeInsets.all(18),
+                    children: [
+                      Text(
+                        "Imagens",
+                        style: TextStyle(color: Colors.grey, fontSize: 12),
+                      ),
+                      ImagesWidget(
+                        context: context,
+                        initialValue: snapshot.data["images"],
+                        onSaved: _productBloc.saveImages,
+                        validator: validateImages,
+                      ),
+                      TextFormField(
+                        initialValue: snapshot.data["title"],
+                        maxLines: 1,
+                        style: _fieldStyle,
+                        decoration: _buildDecoration("Título do produto"),
+                        validator: validateTitle,
+                        onSaved: _productBloc.saveTitle,
+                      ),
+                      TextFormField(
+                          initialValue: snapshot.data["description"],
+                          maxLines: 6,
+                          style: _fieldStyle,
+                          decoration: _buildDecoration("Descrição"),
+                          validator: validateDescription,
+                          onSaved: _productBloc.saveDescription),
+                      TextFormField(
+                          initialValue:
+                              snapshot.data["price"]?.toStringAsFixed(2),
+                          maxLines: 1,
+                          style: _fieldStyle,
+                          keyboardType:
+                              TextInputType.numberWithOptions(decimal: true),
+                          decoration: _buildDecoration("Preço"),
+                          validator: validatePrice,
+                          onSaved: _productBloc.savePrice),
+                    ],
+                  );
+                }),
+          ),
+          StreamBuilder<bool>(
+              stream: _productBloc.outLoading,
+              initialData: false,
+              builder: (context, snapshot) {
+                return IgnorePointer(
+                  ignoring: !snapshot.data,
+                  child: Container(
+                    color: snapshot.data ? Colors.black54 : Colors.transparent,
                   ),
-                  ImagesWidget(
-                    context: context,
-                    initialValue: snapshot.data["images"],
-                    onSaved: _producBloC.saveImages,
-                    validator: validateImages,
-                  ),
-                  TextFormField(
-                    initialValue: snapshot.data["title"],
-                    maxLines: 1,
-                    style: _fieldStyle,
-                    decoration: _buildDecoration("Título do produto"),
-                    validator: validateTitle,
-                    onSaved: _producBloC.saveTitle,
-                  ),
-                  TextFormField(
-                      initialValue: snapshot.data["description"],
-                      maxLines: 6,
-                      style: _fieldStyle,
-                      decoration: _buildDecoration("Descrição"),
-                      validator: validateDescription,
-                      onSaved: _producBloC.saveDescription),
-                  TextFormField(
-                      initialValue: snapshot.data["price"]?.toStringAsFixed(2),
-                      maxLines: 1,
-                      style: _fieldStyle,
-                      keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
-                      decoration: _buildDecoration("Preço"),
-                      validator: validatePrice,
-                      onSaved: _producBloC.savePrice),
-                ],
-              );
-            }),
+                );
+              }),
+        ],
       ),
     );
   }
@@ -101,5 +121,32 @@ class _ProductUIState extends State<ProductUI> with ProductValidator {
     return InputDecoration(
         labelText: label,
         labelStyle: TextStyle(color: AppColors.COR_PALLETA[300]));
+  }
+
+  void _saveProduct() async {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text(
+          "Salvando produto...",
+          style: TextStyle(color: Colors.white),
+        ),
+        duration: Duration(minutes: 1),
+        backgroundColor: AppColors.COR_PRIMARIA,
+      ));
+
+      bool success = await _productBloc.saveProduct();
+
+      _scaffoldKey.currentState.removeCurrentSnackBar();
+
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text(
+          success ? "Produto salvo!" : "Erro ao salvar produto!",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: AppColors.COR_PRIMARIA,
+      ));
+    }
   }
 }
