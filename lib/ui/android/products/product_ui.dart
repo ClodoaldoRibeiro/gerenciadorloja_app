@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gerenciadorloja_app/blocs/product_bloc.dart';
+import 'package:gerenciadorloja_app/ui/android/products/widgets/product_sizes.dart';
 import 'package:gerenciadorloja_app/ui/android/widgets/images_widget.dart';
 import 'package:gerenciadorloja_app/ui/themes/app_colors.dart';
 import 'package:gerenciadorloja_app/validators/product_validator.dart';
@@ -36,14 +37,32 @@ class _ProductUIState extends State<ProductUI> with ProductValidator {
             initialData: false,
             builder: (context, snapshot) {
               return Text(snapshot.data ? "Editar Produto" : "Criar Produto");
-            }
-        ),
+            }),
         elevation: 0,
         actions: [
-          IconButton(
-            color: AppColors.COR_SECUNDARIA,
-            icon: Icon(Icons.delete),
-            onPressed: () {},
+          StreamBuilder<bool>(
+            stream: _productBloc.outCreated,
+            initialData: false,
+            builder: (context, snapshot) {
+              if (snapshot.data)
+                return StreamBuilder<bool>(
+                    stream: _productBloc.outLoading,
+                    initialData: false,
+                    builder: (context, snapshot) {
+                      return IconButton(
+                        color: AppColors.COR_SECUNDARIA,
+                        icon: Icon(Icons.delete),
+                        onPressed: snapshot.data
+                            ? null
+                            : () {
+                                _deleteProduct();
+                                Navigator.of(context).pop();
+                              },
+                      );
+                    });
+              else
+                return Container();
+            },
           ),
           StreamBuilder<bool>(
               stream: _productBloc.outLoading,
@@ -103,6 +122,22 @@ class _ProductUIState extends State<ProductUI> with ProductValidator {
                           decoration: _buildDecoration("Preço"),
                           validator: validatePrice,
                           onSaved: _productBloc.savePrice),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      Text(
+                        "Tamanhos",
+                        style: TextStyle(color: Colors.grey, fontSize: 12),
+                      ),
+                      ProductSizes(
+                        context: context,
+                        initialValue: snapshot.data["sizes"],
+                        onSaved: _productBloc.saveSizes,
+                        // ignore: missing_return
+                        validator: (s) {
+                          if (s.isEmpty) return "";
+                        },
+                      )
                     ],
                   );
                 }),
@@ -154,5 +189,19 @@ class _ProductUIState extends State<ProductUI> with ProductValidator {
         backgroundColor: AppColors.COR_PRIMARIA,
       ));
     }
+  }
+
+  void _deleteProduct() {
+    _productBloc.deleteProduct();
+
+    bool success = _productBloc.deleteProduct();
+
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text(
+        success ? "Produto excluído!" : "Erro ao excluir produto!",
+        style: TextStyle(color: Colors.white),
+      ),
+      backgroundColor: AppColors.COR_PRIMARIA,
+    ));
   }
 }

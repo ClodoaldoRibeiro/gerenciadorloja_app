@@ -84,6 +84,19 @@ class ProducBloC extends BlocBase {
     }
   }
 
+  bool deleteProduct() {
+    _loadingController.add(true);
+    try {
+      product.reference.delete();
+      Future.delayed(Duration(seconds: 2));
+      _loadingController.add(false);
+      return true;
+    } catch (e) {
+      _loadingController.add(false);
+      return false;
+    }
+  }
+
   Future _uploadImages(String productId) async {
     for (int i = 0; i < unsavedData["images"].length; i++) {
       if (unsavedData["images"][i] is String) continue;
