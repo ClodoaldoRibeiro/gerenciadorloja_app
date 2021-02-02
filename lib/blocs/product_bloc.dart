@@ -88,7 +88,6 @@ class ProducBloC extends BlocBase {
     _loadingController.add(true);
     try {
       product.reference.delete();
-      Future.delayed(Duration(seconds: 2));
       _loadingController.add(false);
       return true;
     } catch (e) {

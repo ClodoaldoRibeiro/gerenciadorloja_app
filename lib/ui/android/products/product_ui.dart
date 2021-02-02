@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gerenciadorloja_app/blocs/product_bloc.dart';
+import 'package:gerenciadorloja_app/ui/android/products/widgets/alert_dialog_delete.dart';
 import 'package:gerenciadorloja_app/ui/android/products/widgets/product_sizes.dart';
 import 'package:gerenciadorloja_app/ui/android/widgets/images_widget.dart';
 import 'package:gerenciadorloja_app/ui/themes/app_colors.dart';
@@ -54,9 +55,14 @@ class _ProductUIState extends State<ProductUI> with ProductValidator {
                         icon: Icon(Icons.delete),
                         onPressed: snapshot.data
                             ? null
-                            : () {
-                                _deleteProduct();
-                                Navigator.of(context).pop();
+                            : () async {
+                                bool _apagar = await showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialogDelete());
+                                if (_apagar) {
+                                  _deleteProduct();
+                                  Navigator.of(context).pop();
+                                }
                               },
                       );
                     });
