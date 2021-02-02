@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gerenciadorloja_app/ui/themes/app_colors.dart';
 
+import 'add_size_dialog.dart';
+
 class ProductSizes extends FormField<List> {
   ProductSizes({
     BuildContext context,
@@ -34,15 +36,18 @@ class ProductSizes extends FormField<List> {
                         alignment: Alignment.center,
                         child: Text(
                           s,
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: AppColors.COR_PRIMARIA),
                         ),
                       ),
                     );
                   }).toList()
                     ..add(GestureDetector(
                       onTap: () async {
-                        // String size = await showDialog(context: context, builder: (context)=>AddSizeDialog());
-                        // if(size != null) state.didChange(state.value..add(size));
+                        String size = await showDialog(
+                            context: context,
+                            builder: (context) => AddSizeDialog());
+                        if (!size.isEmpty)
+                          state.didChange(state.value..add(size));
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -55,7 +60,7 @@ class ProductSizes extends FormField<List> {
                         alignment: Alignment.center,
                         child: Text(
                           "+",
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: AppColors.COR_PRIMARIA),
                         ),
                       ),
                     )),
