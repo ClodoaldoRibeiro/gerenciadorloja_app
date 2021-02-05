@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gerenciadorloja_app/ui/android/category/widgets/edit_category_dialog.dart';
 import 'package:gerenciadorloja_app/ui/android/products/product_ui.dart';
 import 'package:gerenciadorloja_app/ui/themes/app_colors.dart';
 
-
 class CategoryTile extends StatelessWidget {
-
   final DocumentSnapshot category;
 
   CategoryTile(this.category);
@@ -17,12 +16,12 @@ class CategoryTile extends StatelessWidget {
       child: Card(
         child: ExpansionTile(
           leading: GestureDetector(
-            onTap: (){
-              showDialog(context: context,
-                builder: (context) => EditCategoryDialog(
-                  category: category,
-                )
-              );
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => EditCategoryDialog(
+                        category: category,
+                      ));
             },
             child: CircleAvatar(
               backgroundImage: NetworkImage(category.data["icon"]),
@@ -31,48 +30,48 @@ class CategoryTile extends StatelessWidget {
           ),
           title: Text(
             category.data["title"],
-            style: TextStyle(color: Colors.grey[850], fontWeight: FontWeight.w500),
+            style:
+                TextStyle(color: Colors.grey[850], fontWeight: FontWeight.w500),
           ),
           children: <Widget>[
             FutureBuilder<QuerySnapshot>(
               future: category.reference.collection("items").getDocuments(),
-              builder: (context, snapshot){
-                if(!snapshot.hasData) return Container();
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) return Container();
                 return Column(
-                  children: snapshot.data.documents.map((doc){
+                  children: snapshot.data.documents.map((doc) {
                     return ListTile(
                       leading: CircleAvatar(
                         backgroundImage: NetworkImage(doc.data["images"][0]),
                       ),
                       title: Text(doc.data["title"]),
-                      trailing: Text(
-                        "R\$${doc.data["price"].toStringAsFixed(2)}"
-                      ),
-                      onTap: (){
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => ProductUI(
-                            categoryId: category.documentID,
-                            product: doc,
-                          ))
-                        );
+                      trailing:
+                          Text("R\$${doc.data["price"].toStringAsFixed(2)}"),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ProductUI(
+                                  categoryId: category.documentID,
+                                  product: doc,
+                                )));
                       },
                     );
-                  }).toList()..add(
-                    ListTile(
+                  }).toList()
+                    ..add(ListTile(
                       leading: CircleAvatar(
                         backgroundColor: Colors.transparent,
-                        child: Icon(Icons.add, color: AppColors.COR_PRIMARIA,),
+                        child: Icon(
+                          Icons.add,
+                          color: AppColors.COR_PRIMARIA,
+                        ),
                       ),
                       title: Text("Adicionar"),
-                      onTap: (){
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => ProductUI (
-                            categoryId: category.documentID,
-                          ))
-                        );
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ProductUI(
+                                  categoryId: category.documentID,
+                                )));
                       },
-                    )
-                  ),
+                    )),
                 );
               },
             )

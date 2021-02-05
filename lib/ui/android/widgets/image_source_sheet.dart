@@ -11,8 +11,7 @@ class ImageSourceSheet extends StatelessWidget {
 
   void imageSelected(File image) async {
     if (image != null) {
-      File croppedImage = await ImageCropper.cropImage(
-          sourcePath: image.path, maxHeight: 1, maxWidth: 1);
+      File croppedImage = await ImageCropper.cropImage(sourcePath: image.path);
       onImageSelected(croppedImage);
     }
   }

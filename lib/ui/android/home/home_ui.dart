@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:gerenciadorloja_app/blocs/orders_bloc.dart';
 import 'package:gerenciadorloja_app/blocs/user_bloc.dart';
+import 'package:gerenciadorloja_app/ui/android/category/widgets/edit_category_dialog.dart';
 import 'package:gerenciadorloja_app/ui/android/products/products_tab.dart';
 import 'package:gerenciadorloja_app/ui/android/user/user_tab_ui.dart';
 import 'package:gerenciadorloja_app/ui/themes/app_colors.dart';
@@ -114,14 +115,14 @@ class _HomeUIState extends State<HomeUI> {
                 })
           ],
         );
+
       case 2:
         return FloatingActionButton(
           child: Icon(Icons.add),
           backgroundColor: Colors.pinkAccent,
           onPressed: () {
-            //   showDialog(context: context,
-            //     builder: (context) => EditCategoryDialog()
-            // );
+            showDialog(
+                context: context, builder: (context) => EditCategoryDialog());
           },
         );
     }
