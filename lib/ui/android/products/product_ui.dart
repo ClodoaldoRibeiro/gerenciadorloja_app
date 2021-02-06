@@ -58,7 +58,11 @@ class _ProductUIState extends State<ProductUI> with ProductValidator {
                             : () async {
                                 bool _apagar = await showDialog(
                                     context: context,
-                                    builder: (context) => AlertDialogDelete());
+                                    builder: (context) => AlertDialogDelete(
+                                          titulo: Text("Excluir este produto?"),
+                                          conteudo: Text(
+                                              "Essa ação não pode ser recuperada!"),
+                                        ));
                                 if (_apagar) {
                                   _deleteProduct();
                                   Navigator.of(context).pop();

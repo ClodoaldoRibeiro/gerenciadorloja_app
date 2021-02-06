@@ -3,11 +3,15 @@ import 'package:flutter/rendering.dart';
 import 'package:gerenciadorloja_app/ui/themes/app_colors.dart';
 
 class AlertDialogDelete extends StatelessWidget {
+  Widget titulo;
+  Widget conteudo;
+  AlertDialogDelete({@required this.titulo, @required this.conteudo});
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Excluir este registro?"),
-        content: Text("Essa ação não pode ser recuperada!"),
+      title: titulo,
+      content: conteudo,
       actions: [
         FlatButton(
           child:

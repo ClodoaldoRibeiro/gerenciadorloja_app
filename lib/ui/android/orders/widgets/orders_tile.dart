@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gerenciadorloja_app/ui/android/products/widgets/alert_dialog_delete.dart';
 import 'package:gerenciadorloja_app/ui/themes/app_colors.dart';
 
 import 'order_header.dart';
@@ -61,14 +62,22 @@ class OrdersTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       FlatButton(
-                        onPressed: () {
-                          Firestore.instance
-                              .collection("users")
-                              .document(order["clientId"])
-                              .collection("orders")
-                              .document(order.documentID)
-                              .delete();
-                          order.reference.delete();
+                        onPressed: () async {
+                          bool _apagar = await showDialog(
+                              context: context,
+                              builder: (context) => AlertDialogDelete(
+                                titulo: Text("Excluir este pedido?"),
+                                conteudo: Text("Essa ação não pode ser recuperada!"),
+                              ));
+                          if (_apagar) {
+                            Firestore.instance
+                                .collection("users")
+                                .document(order["clientId"])
+                                .collection("orders")
+                                .document(order.documentID)
+                                .delete();
+                            order.reference.delete();
+                          }
                         },
                         textColor: Colors.redAccent,
                         child: Text("Excluir"),
