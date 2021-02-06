@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:gerenciadorloja_app/ui/themes/app_colors.dart';
 
 class AlertDialogDelete extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      content: Text("Esse produto será removido da sua lista de itens e " +
-          "não ficará mais disponível para vendas."),
+      title: Text("Excluir este registro?"),
+        content: Text("Essa ação não pode ser recuperada!"),
       actions: [
         FlatButton(
           child:
