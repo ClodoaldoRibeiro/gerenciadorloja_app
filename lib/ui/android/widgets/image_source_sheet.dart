@@ -23,21 +23,68 @@ class ImageSourceSheet extends StatelessWidget {
       builder: (context) => Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          FlatButton(
-            child: Text("Câmera"),
-            onPressed: () async {
-              File image =
-                  await ImagePicker.pickImage(source: ImageSource.camera);
-              imageSelected(image);
-            },
+          Padding(
+            padding: EdgeInsets.all(16),
+            child: Text(
+              "Foto da categoria",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Colors.black),
+            ),
           ),
-          FlatButton(
-            child: Text("Galeria"),
-            onPressed: () async {
-              File image =
-                  await ImagePicker.pickImage(source: ImageSource.gallery);
-              imageSelected(image);
-            },
+          Padding(
+            padding: EdgeInsets.all(14),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                GestureDetector(
+                  onTap: () async {
+                    File image =
+                        await ImagePicker.pickImage(source: ImageSource.camera);
+                    imageSelected(image);
+                  },
+                  child: Column(
+
+                    children: [
+                      CircleAvatar(
+                        child: Image.asset(
+                          "assets/images/foto.png",
+                          fit: BoxFit.cover,
+                        ),
+                        backgroundColor: Colors.transparent,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("Câmera",),
+                      ),
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () async {
+                    File image = await ImagePicker.pickImage(
+                        source: ImageSource.gallery);
+                    imageSelected(image);
+                  },
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        child: Image.asset(
+                          "assets/images/galeria.png",
+                          fit: BoxFit.cover,
+                        ),
+                        backgroundColor: Colors.transparent,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("Galeria"),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
           )
         ],
       ),
