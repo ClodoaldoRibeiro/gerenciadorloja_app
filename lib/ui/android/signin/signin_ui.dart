@@ -29,8 +29,14 @@ class _SigninUIState extends State<SigninUI> {
           showDialog(
               context: context,
               builder: (context) => AlertDialog(
-                    title: Text("Erro"),
-                    content: Text("Você não possui os privilégios necessários"),
+                    title: CircleAvatar(
+                      child: Image.asset(
+                        "assets/images/triste.png",
+                        fit: BoxFit.cover,
+                      ),
+                      backgroundColor: Colors.transparent,
+                    ),
+                    content: Text("Verifique os dados informados ou se você possui os privilégios necessários!"),
                   ));
           break;
         case LoginState.LOADING:
