@@ -3,7 +3,7 @@
 # gerenciadorloja_app
  
  ## Sobre o Projeto
- Projeto de construção de um Gerenciador da para a [Loja Virtual](https://github.com/ClodoaldoRibeiro/lojavirtual_app).
+ Projeto de construção de um Gerenciador para a [Loja Virtual](https://github.com/ClodoaldoRibeiro/lojavirtual_app).
  
  
  ## Tecnologias
